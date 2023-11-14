@@ -1,0 +1,33 @@
+.principal,.editar{
+    margin: 0 auto;
+    width: 70%;
+    margin-top: 20px;
+}
+
+.seguandaria{
+    margin-top: 10px;
+}
+
+nav ul li a{
+    color: white;
+}
+
+.editar{
+    margin-top: 30px;
+}
+.en h1{
+    margin-top: 30px;
+    margin-left: 30%;
+}
+.add{
+    margin-top: 30px;
+    margin-bottom: 20px;
+    margin-left: 200px;
+}
+
+.tipo{
+    margin-top: 30px;
+    margin-bottom: 20px;
+    margin-left: 650px;
+}
+
