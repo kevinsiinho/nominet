@@ -8,6 +8,15 @@
             <div class="card">
               <div class="card-body py-5 px-md-5">
                 <h1 class="text-center fw-bold ls-tight h1">Iniciar Sesión</h1>
+                @if($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
                 <form action="{{'sesion'}}" method="POST">
                     @csrf
                   <div class="form-outline mb-4">

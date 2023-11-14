@@ -30,7 +30,7 @@ class SesionController extends Controller
             $request->session()->regenerate();
             return redirect()->intended('home');
         }else{
-            return redirect('sesion');
+            return redirect('sesion')->withErrors(['mensaje' => 'Credenciales incorrectas, inténtalo nuevamente.']);
         }
     }
 
