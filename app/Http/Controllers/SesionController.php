@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class SesionController extends Controller
 {
@@ -12,7 +13,7 @@ class SesionController extends Controller
      */
     public function index()
     {
-        return view("sesion");
+
     }
 
     /**
@@ -20,18 +21,22 @@ class SesionController extends Controller
      */
     public function store(Request $request)
     {
-        $credenciales=[
-            "email"=>$request->email,
-            "password"=>$request->password,
-        ];
-        $remember=($request->has('remember')? true : false);
+        $response = ["status"=>0,"msg"=>""];
+        $data = json_decode($request->getContent());
+        $user=User::where('email',$data->email)->first();
 
-        if(Auth::attempt($credenciales,$remember)){
-            $request->session()->regenerate();
-            return redirect()->intended('home');
+        if($user){
+            if(Hash::check($data->password, $user->password)){
+                $token = $user->createToken("Example",['user' => $user]);
+                $response["status"]=1;
+                $response["msg"]=$token->plainTextToken;
+            }else{
+                $response["msg"]="Crenciales incorrectas";
+            }
         }else{
-            return redirect('sesion')->withErrors(['mensaje' => 'Credenciales incorrectas, inténtalo nuevamente.']);
+            $response["msg"]="Usuario no encontrado.";
         }
+        return response()->json($response);
     }
 
 
@@ -40,10 +45,9 @@ class SesionController extends Controller
      */
     public function logout(Request $request)
     {
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-        return redirect(route('sesion.index'));
+        $request->user()->tokens()->delete();
+        return response()->json(["msn" => "Vuelve pronto"]);
+
     }
 
 }

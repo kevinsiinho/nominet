@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id();
             $table->datetime('llegada');
             $table->datetime('salida');
-            $table->integer('cantidad');
+            $table->double('valor');
+            $table->string('descrip1')->nullable();
+            $table->string('descrip2')->nullable();
             $table->integer('users');
             $table->foreign('users')->references('id')->on('users');
         });
